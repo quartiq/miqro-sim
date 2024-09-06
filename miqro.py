@@ -20,7 +20,7 @@ class Phaser:
     def write16(self, addr, data):
         assert addr == PHASER_ADDR_MIQRO_MEM_ADDR
         self.write32(addr, data)
-        
+
     def write32(self, addr, data):
         rtio_output((self.channel_base << 8) | (addr & 0x7f) | 0x80, data)
         delay_mu(self.t_frame)
@@ -62,28 +62,28 @@ class Miqro:
     * The output phase ``p'`` of each oscillator at time ``t`` (boot/reset/initialization of the
       device at ``t=0``) is then ``p' = f*t + p (mod 1 turn)`` where ``f`` and ``p`` are the (currently
       active) profile frequency and phase offset.
-    
-    .. note :: 
+
+    .. note ::
         The terms  "phase coherent" and "phase tracking" are defined to refer to this
         choice of oscillator output phase ``p'``. Note that the phase offset ``p`` is not relative to
         (on top of previous phase/profiles/oscillator history).
         It is "absolute" in the sense that frequency ``f`` and phase offset ``p`` fully determine
         oscillator output phase ``p'`` at time ``t``. This is unlike typical DDS behavior.
-    
+
     * Frequency, phase, and amplitude of each oscillator are configurable by selecting one of
-      ``n_profiles = 32`` profiles ``0``... ``n_profile-1``. This selection is fast and can be 
+      ``n_profiles = 32`` profiles ``0``... ``n_profile-1``. This selection is fast and can be
       done for each pulse. The phase coherence defined above is guaranteed for each
       profile individually.
     * Note: one profile per oscillator (usually profile index 0) should be reserved
       for the NOP (no operation, identity) profile, usually with zero amplitude.
     * Data for each profile for each oscillator can be configured
       individually. Storing profile data should be considered "expensive".
-    
-    .. note:: 
-        To refer to an operation as "expensive" does not mean it is impossible, 
-        merely that it may take a significant amount of time and resources to 
-        execute, such that it may be impractical when used often or during fast 
-        pulse sequences. They are intended for use in calibration and initialization.  
+
+    .. note::
+        To refer to an operation as "expensive" does not mean it is impossible,
+        merely that it may take a significant amount of time and resources to
+        execute, such that it may be impractical when used often or during fast
+        pulse sequences. They are intended for use in calibration and initialization.
 
     **Summation**
 
