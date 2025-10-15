@@ -264,7 +264,7 @@ class Miqro:
             to zero with the chosen interpolation.
         :return: Actual sample period in SI units
         """
-        rate = int32(round(period/(4*ns)))
+        rate = uint32(round(period/(4*ns)))
         gain = 1.
         for _ in range(order):
             gain *= rate

@@ -2,6 +2,7 @@
 
 import logging
 import typing
+from numpy import uint32, int64
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +32,7 @@ __timeline = Timeline()
 
 def rtio_output(addr, data):
     logger.debug(f"RTIO @{__timeline.cursor:#010x}: {addr:#04x} < {data:#010x}")
-    __timeline.events.append((__timeline.cursor, addr, data))
+    __timeline.events.append((int64(__timeline.cursor), uint32(addr), uint32(data)))
 
 
 def rtio_get_all():
