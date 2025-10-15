@@ -1,5 +1,6 @@
 import logging
 import numpy as np
+import warnings
 
 from artiq import *
 import miqro
@@ -32,7 +33,7 @@ class MiqroSim:
                 self._handle_cfg(a - 0x100, d)
             else:
                 raise ValueError("addr", a)
-            if a - 0x100 == 0:
+            if a == 0x100:
                 yield self._handle_trigger(t, d)
 
     def _handle_mem(self, addr, data):
@@ -71,7 +72,9 @@ class MiqroSim:
             logging.info(
                 f"osc {osc}: profile {self.cfg[osc]} ({f / (1 << 32) / self.tau / MHz:g} MHz, {a / (1 << 16):g} @{p / (1 << 16):g} turn)"
             )
-            p1 = (f * (ts - 1) + (p << 16)).astype(np.int32)
+            with warnings.catch_warnings():
+                warnings.filterwarnings('ignore', r'overflow encountered in scalar multiply')
+                p1 = (f * (ts - 1) + (p << 16)).astype(np.int32)
             p1 = (
                 np.cumsum(np.lib.stride_tricks.as_strided(np.array(f), (n,), (0,))) + p1
             )
