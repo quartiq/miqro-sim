@@ -183,6 +183,8 @@ For a 16-tone pulse train (limited in phase noise, noise floor, dynamic range, a
 
 ![MIQRO spectrum](img/miqro_16tone_cic4_impulse_4gs.png)
 
+![MIQRO upconverter spectrum](img/miqro_upconverter_16cw.png)
+
 ## Simulator accuracy/features
 
 The API and features described and implemented here may be slightly different from the actual gateware/ARTIQ implementation. Check back before relying on it.
